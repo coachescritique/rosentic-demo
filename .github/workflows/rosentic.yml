@@ -1,0 +1,33 @@
+# Rosentic — The agent output pipeline
+# Catches semantic conflicts between AI coding agents before they break main.
+
+name: Rosentic Scan
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  rosentic-scan:
+    name: Rosentic — Conflict Detection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch all branches
+        run: |
+          git fetch --all
+
+      - name: Rosentic Scan
+        uses: docker://ghcr.io/coachescritique/rosentic-engine:latest
+        env:
+          ROSENTIC_KEY: ${{ secrets.ROSENTIC_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ROSENTIC_BLOCK: "true"
