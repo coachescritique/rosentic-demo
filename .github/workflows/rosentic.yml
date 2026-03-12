@@ -21,9 +21,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fetch all branches
+      - name: Set up local branches
         run: |
           git fetch --all
+          for b in $(git branch -r | grep -v HEAD | grep -v '/main$' | sed 's|origin/||'); do
+            git branch --track "$b" "origin/$b" 2>/dev/null || true
+          done
 
       - name: Rosentic Scan
         uses: docker://ghcr.io/coachescritique/rosentic-engine:latest
