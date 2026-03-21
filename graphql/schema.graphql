@@ -1,19 +1,20 @@
 enum Role {
   ADMIN
   USER
-  MODERATOR
 }
 
 enum PostStatus {
   DRAFT
   PUBLISHED
   ARCHIVED
+  SCHEDULED
 }
 
 input CreateUserInput {
   name: String!
   email: String!
   role: Role
+  department: String!
 }
 
 input CreatePostInput {
@@ -21,6 +22,7 @@ input CreatePostInput {
   body: String!
   status: PostStatus
   authorId: ID!
+  categoryId: ID!
 }
 
 type User {
@@ -29,7 +31,6 @@ type User {
   email: String!
   role: Role!
   posts: [Post!]!
-  avatarUrl: String
 }
 
 type Post {
@@ -39,6 +40,7 @@ type Post {
   status: PostStatus!
   author: User!
   createdAt: String!
+  updatedAt: String!
 }
 
 type Query {
