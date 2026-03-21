@@ -1,0 +1,58 @@
+enum Role {
+  ADMIN
+  USER
+  MODERATOR
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  role: Role
+}
+
+input CreatePostInput {
+  title: String!
+  body: String!
+  status: PostStatus
+  authorId: ID!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  role: Role!
+  posts: [Post!]!
+  avatarUrl: String
+}
+
+type Post {
+  id: ID!
+  title: String!
+  body: String!
+  status: PostStatus!
+  author: User!
+  createdAt: String!
+}
+
+type Query {
+  user(id: ID!): User
+  users: [User!]!
+  post(id: ID!): Post
+  posts(status: PostStatus): [Post!]!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  updateUser(id: ID!, input: CreateUserInput!): User!
+  deleteUser(id: ID!): Boolean!
+  createPost(input: CreatePostInput!): Post!
+  updatePost(id: ID!, input: CreatePostInput!): Post!
+  deletePost(id: ID!): Boolean!
+}
