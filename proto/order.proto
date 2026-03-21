@@ -6,6 +6,7 @@ message CreateOrderRequest {
   string user_id = 1;
   string product_id = 2;
   int32 quantity = 3;
+  string shipping_address = 4;
 }
 
 message OrderResponse {
@@ -13,14 +14,25 @@ message OrderResponse {
   string user_id = 2;
   string product_id = 3;
   string status = 4;
-  double total = 5;
+}
+
+enum OrderPriority {
+  STANDARD = 0;
+  EXPRESS = 1;
+  OVERNIGHT = 2;
 }
 
 service OrderService {
   rpc CreateOrder (CreateOrderRequest) returns (OrderResponse);
   rpc GetOrder (GetOrderRequest) returns (OrderResponse);
+  rpc CancelOrder (CancelOrderRequest) returns (OrderResponse);
 }
 
 message GetOrderRequest {
   string order_id = 1;
+}
+
+message CancelOrderRequest {
+  string order_id = 1;
+  string reason = 2;
 }
