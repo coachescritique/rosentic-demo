@@ -9,6 +9,8 @@ class CreateOrderRequest(BaseModel):
     user_id: str
     product_id: str
     quantity: int = 1
+    shipping_address: str
+    priority: Optional[str] = None
 
 
 class OrderResponse(BaseModel):
@@ -16,13 +18,12 @@ class OrderResponse(BaseModel):
     user_id: str
     product_id: str
     status: str
-    total: float
 
 
-def create_order(user_id, product_id):
+def create_order(user_id, product_id, shipping_address):
     return {"order_id": "ord_123", "user_id": user_id, "product_id": product_id, "status": "created"}
 
 
 @app.post("/order")
 def order_endpoint(order: CreateOrderRequest) -> OrderResponse:
-    return create_order(order.user_id, order.product_id)
+    return create_order(order.user_id, order.product_id, order.shipping_address)
