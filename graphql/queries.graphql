@@ -1,0 +1,44 @@
+query GetUserProfile($id: ID!) {
+  user(id: $id) {
+    id
+    name
+    email
+    role
+    avatarUrl
+    posts {
+      id
+      title
+      status
+    }
+  }
+}
+
+query ListModerators {
+  users {
+    id
+    name
+    role
+    avatarUrl
+  }
+}
+
+mutation CreateNewUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    name
+    email
+    role
+  }
+}
+
+mutation CreateNewPost($input: CreatePostInput!) {
+  createPost(input: $input) {
+    id
+    title
+    status
+    author {
+      name
+      avatarUrl
+    }
+  }
+}
