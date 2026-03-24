@@ -18,4 +18,3 @@ def create_order(user_id, product_id, shipping_address):
 @app.post("/order")
 def order_endpoint(user_id: str, product_id: str, shipping_address: str):
     return create_order(user_id, product_id, shipping_address)
-# Trigger CI
