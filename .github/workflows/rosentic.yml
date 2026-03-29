@@ -31,6 +31,4 @@ jobs:
       - name: Rosentic Scan
         uses: docker://ghcr.io/rosentic/rosentic-engine:latest
         env:
-          ROSENTIC_KEY: ${{ secrets.ROSENTIC_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ROSENTIC_BLOCK: "true"
