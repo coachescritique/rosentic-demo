@@ -28,6 +28,13 @@ jobs:
             git branch --track "$b" "origin/$b" 2>/dev/null || true
           done
 
+      - name: Restore Rosentic cache
+        uses: actions/cache@v4
+        with:
+          path: .rosentic/
+          key: rosentic-${{ github.repository }}-${{ github.sha }}
+          restore-keys: rosentic-${{ github.repository }}-
+
       - name: Rosentic Scan
         uses: docker://ghcr.io/rosentic/rosentic-engine:latest
         env:
